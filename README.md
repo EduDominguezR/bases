@@ -1,15 +1,28 @@
-Spookie Cookie
+# Spookie Cookie
 
-Aplicación web desarrollada con Next.js para la gestión de una repostería.
-Permite administrar productos, clientes y pedidos desde una interfaz moderna y sencilla.
-Conecta con una base de datos para optimizar el control de inventario y ventas.
+Aplicación web desarrollada con **Next.js** para la gestión de una
+repostería.\
+Permite administrar **productos, clientes y pedidos** desde una interfaz
+moderna y sencilla.\
+Conecta con una base de datos para optimizar el control de inventario y
+ventas.
 
-##Instalación
-npm install 
+------------------------------------------------------------------------
+
+## Instalación
+
+``` bash
+npm install
 npm run dev
+```
 
-Comandos SQL para la creación de la base de datos
-##Tabla: cliente
+------------------------------------------------------------------------
+
+## Comandos SQL para la creación de la base de datos
+
+### Tabla: `cliente`
+
+``` sql
 CREATE TABLE cliente (
     id_cliente INT(11) NOT NULL AUTO_INCREMENT,
     nombre VARCHAR(50) NOT NULL,
@@ -20,8 +33,13 @@ CREATE TABLE cliente (
     contraseña VARCHAR(255) NOT NULL,
     PRIMARY KEY (id_cliente)
 );
+```
 
-##Tabla: producto
+------------------------------------------------------------------------
+
+### Tabla: `producto`
+
+``` sql
 CREATE TABLE producto (
     id_producto INT(11) NOT NULL AUTO_INCREMENT,
     nombre VARCHAR(100) NOT NULL,
@@ -32,8 +50,13 @@ CREATE TABLE producto (
     imagen VARCHAR(150),
     PRIMARY KEY (id_producto)
 );
+```
 
-##Tabla: pedido
+------------------------------------------------------------------------
+
+### Tabla: `pedido`
+
+``` sql
 CREATE TABLE pedido (
     id_pedido INT(11) NOT NULL AUTO_INCREMENT,
     id_cliente INT(11) NOT NULL,
@@ -44,8 +67,13 @@ CREATE TABLE pedido (
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
+```
 
-##Tabla: detalle_pedido
+------------------------------------------------------------------------
+
+### Tabla: `detalle_pedido`
+
+``` sql
 CREATE TABLE detalle_pedido (
     id_detalle INT(11) NOT NULL AUTO_INCREMENT,
     id_pedido INT(11) NOT NULL,
@@ -60,27 +88,46 @@ CREATE TABLE detalle_pedido (
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
+```
 
-##Usuarios y Roles
-Crear roles
+------------------------------------------------------------------------
+
+## Usuarios y Roles
+
+### Crear roles
+
+``` sql
 CREATE ROLE IF NOT EXISTS r_admin_role;
 CREATE ROLE IF NOT EXISTS r_cliente_role;
+```
 
-##Asignar privilegios
+### Asignar privilegios
+
+``` sql
 GRANT ALL PRIVILEGES ON reposteria.* TO r_admin_role;
 
 GRANT SELECT ON reposteria.decoracion TO r_cliente_role;
 GRANT SELECT ON reposteria.producto TO r_cliente_role;
 GRANT INSERT ON reposteria.pedido TO r_cliente_role;
+```
 
-##Crear usuarios
+### Crear usuarios
+
+``` sql
 CREATE USER IF NOT EXISTS 'r_admin'@'localhost' IDENTIFIED BY 'Adm1nC00kie!';
 CREATE USER IF NOT EXISTS 'r_cliente'@'localhost' IDENTIFIED BY 'Cl13nt3C00kie!';
+```
 
-##Asignar roles
+### Asignar roles
+
+``` sql
 GRANT r_admin_role TO 'r_admin'@'localhost';
 GRANT r_cliente_role TO 'r_cliente'@'localhost';
+```
 
-Roles por defecto
+### Roles por defecto
+
+``` sql
 SET DEFAULT ROLE r_admin_role FOR 'r_admin'@'localhost';
 SET DEFAULT ROLE r_cliente_role FOR 'r_cliente'@'localhost';
+```
